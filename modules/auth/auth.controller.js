@@ -8,7 +8,7 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
-  console.log("hello");
+  console.log("helloooooo");
   return res.send(req.body);
 };
 
