@@ -5,14 +5,14 @@ const register = (req, res) => {
 
   const result = authService.register(req.body);
   return res.send(result);
-}
+};
 
 const login = (req, res) => {
+  console.log("hello");
   return res.send(req.body);
-}
-
+};
 
 module.exports = {
   register,
-  login
-}
+  login,
+};
