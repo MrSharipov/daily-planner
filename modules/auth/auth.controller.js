@@ -7,7 +7,12 @@ const register = (req, res) => {
   return res.send(result);
 }
 
+const login = (req, res) => {
+  return res.send(req.body);
+}
+
 
 module.exports = {
-  register
+  register,
+  login
 }
