@@ -1,15 +1,26 @@
-const create = (data) => {
-  // hash the password
+const { generateToken } = require("../middleware/auth.middleware");
+const usersModule = require("../../modules/users/user.module");
 
+const register = async (user) => {
+  const userForDb = {
+    ...user,
+    active: true,
+    created_at: Date.now(),
+    updated_at: Date.now(),
+  };
 
-  // create user with data and hashed password
+  const userDoc = await usersModule.create(userForDb);
 
+  const token = generateToken(userDoc._id);
+  return token;
+};
 
-  // return created user
-  return data;
-}
-
+const login = async (user) => {
+  const token = await generateToken(user.id);
+  return token;
+};
 
 module.exports = {
-  create
-}
+  register,
+  login,
+};
