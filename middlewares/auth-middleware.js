@@ -1,5 +1,7 @@
-const generateToken = (data) => {
-  return data; // should be continued...
+const generateToken = (id) => {
+  // implement JWT to create token
+  //your code ...
+  return id; // should be continued...
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
 const express = require('express')
-const userRouter = require('./routes/auth.router')
+const authRouter = require('./routes/auth.router')
 const dbConnect = require("./db/db.connect");
 
 const app = express()
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 //Adding routes
-app.use("/auth", userRouter);
+app.use("/auth", authRouter);
 
 app.listen(port, () => {
   console.log(`Daily-planner-app listening on port ${port}`)

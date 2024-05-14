@@ -1,10 +1,10 @@
-const userModule = require("../../db/models/user.model");
+const User = require("../../db/models/user.model");
 const errorHandle = require("../../helpers/error.service");
 const bcrypt = require("bcrypt");
 
 const create = async (data) => {
   try {
-    const newUser = new userModule( {
+    const newUser = new User( {
       active: data.active ? data.active : null,
       user_name: data.userName,
       password: await bcrypt.hash(data.password, 10),
@@ -18,10 +18,11 @@ const create = async (data) => {
   }
 };
 
-// const findOne = async (query) => {
-//   return await UserModel.findOne(query);
-// };
+const getByUserName = async (query) => {
+  return User.findOne(query);
+};
 
 module.exports = {
-  create
+  create,
+  getByUserName
 };
