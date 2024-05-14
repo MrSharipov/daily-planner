@@ -1,26 +1,27 @@
-const usersModule = require("../../modules/users/user.module");
-const {generateToken} = require("../../middlewares/auth-middleware");
+const userModule = require("../../db/models/user.model");
+const errorHandle = require("../../helpers/error.service");
+const bcrypt = require("bcrypt");
 
-const register = async (user) => {
-  const userForDb = {
-    ...user,
-    active: true,
-    created_at: Date.now(),
-    updated_at: Date.now(),
-  };
-
-  const userDoc = await usersModule.create(userForDb);
-
-  const token = generateToken(userDoc._id);
-  return token;
+const create = async (data) => {
+  try {
+    const newUser = new userModule( {
+      active: data.active ? data.active : null,
+      user_name: data.userName,
+      password: await bcrypt.hash(data.password, 10),
+      created_at: Date.now(),
+      updated_at: Date.now()
+    });
+    await newUser.save();
+    return newUser
+  } catch (err) {
+    return errorHandle(err.message, 500, err.name);
+  }
 };
 
-const login = async (user) => {
-  const token = await generateToken(user.id);
-  return token;
-};
+// const findOne = async (query) => {
+//   return await UserModel.findOne(query);
+// };
 
 module.exports = {
-  register,
-  login,
+  create
 };

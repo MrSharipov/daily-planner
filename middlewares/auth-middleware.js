@@ -1,5 +1,5 @@
 const generateToken = (data) => {
-  return data;
+  return data; // should be continued...
 }
 
 module.exports = {

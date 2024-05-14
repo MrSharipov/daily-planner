@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 async function dbConnect() {
   try {
-    mongoose.connect("mongodb://127.0.0.1:27017/loginAndCreate");
+    mongoose.connect("mongodb://127.0.0.1:27017/daily_planner");
     const database = await mongoose.connection;
 
     database.on("error", (error) => {
