@@ -1,5 +1,5 @@
-const { generateToken } = require("../middleware/auth.middleware");
 const usersModule = require("../../modules/users/user.module");
+const {generateToken} = require("../../middlewares/auth-middleware");
 
 const register = async (user) => {
   const userForDb = {
