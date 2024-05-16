@@ -6,7 +6,7 @@ router.use(bodyParser.json());
 
 router.put("/:id", (req, res) => userController.update(req, res));
 
-// router.delete("/:id", (req, res) => userController.delete(req, res));
+router.delete("/:id", (req, res) => userController.remove(req, res));
 
 router.post("/", (req, res) => userController.create(req, res));
 

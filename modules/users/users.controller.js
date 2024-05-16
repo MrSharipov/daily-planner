@@ -3,6 +3,7 @@ const userService = require("../../modules/users/users.service");
 const UserCreatDto = require("../../helpers/dtos/users/users-create.dto");
 const handleError = require("../../helpers/error.service");
 const {UserUpdateDto} = require("../../helpers/dtos/users/userUpdate.dto");
+const IdCheckDTO = require("../../helpers/dtos/global/id-check.dto");
 
 const create = async (req, res) => {
   const {userName, password} = req.body;
@@ -46,7 +47,24 @@ const update = async (req, res) => {
   }
 };
 
+const remove = async (req, res) => {
+  const {id} = req.params;
+  try {
+    IdCheckDTO(id);
+    await userService.remove(id);
+    return res.json({
+      id,
+      removed: true,
+    })
+  } catch (err) {
+    console.log(err)
+    return res.json(handleError(err.message, 500, err.name));
+  }
+
+}
+
 module.exports = {
   create,
-  update
+  update,
+  remove
 };

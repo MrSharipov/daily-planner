@@ -33,9 +33,14 @@ const update = async (id, data) => {
   });
 };
 
+const remove = async (id) => {
+  return User.findByIdAndDelete(id);
+}
+
 module.exports = {
   create,
   getByUserName,
   update,
-  getById
+  getById,
+  remove
 };
