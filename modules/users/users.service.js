@@ -22,16 +22,19 @@ const getByUserName = async (query) => {
   return User.findOne(query);
 };
 
+const getById = async (id) => {
+  return User.findById(id);
+};
+
 const update = async (id, data) => {
-  const userDoc = await User.findByIdAndUpdate(id, data, {
+  return User.findByIdAndUpdate(id, data, {
     new: true,
   });
-
-  return userDoc;
 };
 
 module.exports = {
   create,
   getByUserName,
   update,
+  getById
 };
