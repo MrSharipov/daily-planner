@@ -3,7 +3,8 @@ const errorHandle = require("../../helpers/error.service");
 const authService = require("./auth.service");
 const UserCreatDto = require("../../helpers/dtos/users/users-create.dto");
 const LoginUserDto = require("../../helpers/dtos/auth/login-user.dto");
-const {generateToken} = require("../../middlewares/auth-middleware");
+const { generateToken } = require("../../middlewares/auth-middleware");
+const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   try {
@@ -13,7 +14,6 @@ const register = async (req, res) => {
     const token = await authService.register(data);
 
     return res.status(201).send({ status: "OK", authToken: token });
-
   } catch (err) {
     return res.json(errorHandle(err.message, 500, err.name));
   }
@@ -32,7 +32,13 @@ const login = async (req, res) => {
     // check password: password in payload === password of user in DB
     //your code...
 
-    const token = generateToken(user._id);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid password  " });
+    }
+
+    const token = await generateToken(user._id); // The problem was in async and await
 
     return res.status(201).send({ status: "OK", authToken: token });
   } catch (err) {

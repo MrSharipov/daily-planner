@@ -1,9 +1,9 @@
-const generateToken = (id) => {
-  // implement JWT to create token
-  //your code ...
-  return id; // should be continued...
-}
+const jwt = require("jsonwebtoken");
+
+const generateToken = async (id) => {
+  return await jwt.sign({ id }, "secret", { expiresIn: "1h" });
+};
 
 module.exports = {
-  generateToken
-}
+  generateToken,
+};
