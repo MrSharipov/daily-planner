@@ -5,16 +5,27 @@ const handleError = require("../../helpers/error.service");
 const {UserUpdateDto} = require("../../helpers/dtos/users/userUpdate.dto");
 
 const create = async (req, res) => {
+  const {userName, password} = req.body;
   try {
-    const data = UserCreatDto(req, res);
-    return await userService.create(data);
+    UserCreatDto(userName, password);
+
+    const user = await userService.getByUserName(userName);
+
+    if (user) {
+      throw new Error("User has been already registered");
+    }
+    const newUser = await userService.create({userName, password});
+
+    return res.json(newUser);
+
   } catch (err) {
+    console.error(err, 'user.controller')
     return res.json(errorHandle(err.message, 500, err.name));
   }
 };
 
 const update = async (req, res) => {
-  const { password, user_name, active } = req.body;
+  const {password, user_name, active} = req.body;
   const id = req.params.id;
 
   try {

@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const create = async (data) => {
   try {
     const newUser = new User({
-      active: data.active ? data.active : null,
+      active: data.active ? data.active : true,
       user_name: data.userName,
       password: await bcrypt.hash(data.password, 10),
       created_at: Date.now(),
@@ -14,12 +14,13 @@ const create = async (data) => {
     await newUser.save();
     return newUser;
   } catch (err) {
+    console.error(err, 'user.service')
     return errorHandle(err.message, 500, err.name);
   }
 };
 
-const getByUserName = async (query) => {
-  return User.findOne(query);
+const getByUserName = async (userName) => {
+  return User.findOne({user_name: userName});
 };
 
 const getById = async (id) => {
