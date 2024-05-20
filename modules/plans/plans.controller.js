@@ -10,8 +10,6 @@ const create = async (req, res) => {
   try {
     PlanCreatDto(title, deadline);
 
-    const plan = await plansService.getByTitle(title);
-
     if (plan) {
       throw new Error("plan has been already added");
     }

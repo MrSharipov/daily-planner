@@ -17,8 +17,8 @@ const create = async (data) => {
   }
 };
 
-const getTitleById = async (title) => {
-  return Plan.findOne({ title: title });
+const getById = async (id) => {
+  return Plan.findById(id);
 };
 
 const update = async (id, data) => {
@@ -33,7 +33,7 @@ const remove = async (id) => {
 
 module.exports = {
   create,
-  getTitleById,
+  getById,
   update,
   remove,
 };
