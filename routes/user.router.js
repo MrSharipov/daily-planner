@@ -14,4 +14,8 @@ router.get("/:id", (req, res) =>
   userController.getById(req, res)
 );
 
+router.get("/", (req, res) =>
+  userController.getAll(req, res)
+);
+
 module.exports = router;

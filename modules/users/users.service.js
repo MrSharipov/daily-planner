@@ -27,6 +27,10 @@ const getById = async (id) => {
   return await User.findById(id)
 };
 
+const getAll = async () => {
+  return await User.find();
+};
+
 const update = async (id, data) => {
   return User.findByIdAndUpdate(id, data, {
     new: true,
@@ -42,5 +46,6 @@ module.exports = {
   getByUserName,
   update,
   getById,
+  getAll,
   remove
 };

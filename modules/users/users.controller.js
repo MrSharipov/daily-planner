@@ -75,9 +75,15 @@ const getById = async (req, res) => {
   }
 }
 
+const getAll = async (req, res) => {
+    const result = await userService.getAll();
+    return res.json(result);
+}
+
 module.exports = {
   create,
   update,
   remove,
-  getById
+  getById,
+  getAll
 };
