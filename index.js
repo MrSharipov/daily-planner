@@ -1,12 +1,14 @@
 const express = require("express");
+const dotEnv = require('dotenv');
 const authRouter = require("./routes/auth.router");
 const userRouter = require("./routes/user.router");
 const plansRouter = require("./routes/plans.router");
 
 const dbConnect = require("./db/db.connect");
 
+dotEnv.config();
 const app = express();
-const port = 3000;
+const port = process.env.SERVER_PORT;
 
 dbConnect();
 

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 async function dbConnect() {
   try {
-    mongoose.connect("mongodb://127.0.0.1:27017/daily_planner");
+    mongoose.connect(process.env.DATABASE_URL);
     const database = await mongoose.connection;
 
     database.on("error", (error) => {
