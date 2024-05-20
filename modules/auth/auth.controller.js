@@ -1,8 +1,6 @@
 const userService = require("../users/users.service");
-const errorHandle = require("../../helpers/error.service");
 const authService = require("./auth.service");
-const UserCreatDto = require("../../helpers/dtos/users/users-create.dto");
-const LoginUserDto = require("../../helpers/dtos/auth/login-user.dto");
+const {UserCreatDto, LoginUserDto, errorHandle} = require("../../helpers");
 const { generateToken } = require("../../middlewares/auth-middleware");
 const bcrypt = require("bcrypt");
 
