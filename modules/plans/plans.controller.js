@@ -9,10 +9,6 @@ const create = async (req, res) => {
   const { title, deadline } = req.body;
   try {
     PlanCreatDto(title, deadline);
-
-    if (plan) {
-      throw new Error("plan has been already added");
-    }
     const newPlan = await plansService.create({ title, deadline });
 
     return res.json(newPlan);

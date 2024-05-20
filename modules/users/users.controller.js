@@ -63,8 +63,21 @@ const remove = async (req, res) => {
 
 }
 
+const getById = async (req, res) => {
+  const {id} = req.params;
+  try {
+    IdCheckDTO(id);
+    const user = await userService.getById(id);
+    return res.json(user);
+  } catch (err) {
+    console.log(err)
+    return res.json(handleError(err.message, 500, err.name));
+  }
+}
+
 module.exports = {
   create,
   update,
-  remove
+  remove,
+  getById
 };

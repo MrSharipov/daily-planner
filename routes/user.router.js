@@ -10,8 +10,8 @@ router.delete("/:id", (req, res) => userController.remove(req, res));
 
 router.post("/", (req, res) => userController.create(req, res));
 
-// router.get("/all/:username", (req, res) =>
-//   userController.getByUserName(req, res)
-// );
+router.get("/:id", (req, res) =>
+  userController.getById(req, res)
+);
 
 module.exports = router;

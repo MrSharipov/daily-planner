@@ -24,7 +24,7 @@ const getByUserName = async (userName) => {
 };
 
 const getById = async (id) => {
-  return User.findById(id);
+  return await User.findById(id)
 };
 
 const update = async (id, data) => {
