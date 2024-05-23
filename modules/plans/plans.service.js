@@ -17,10 +17,6 @@ const create = async (data) => {
   }
 };
 
-const getById = async (id) => {
-  return Plan.findById(id);
-};
-
 const update = async (id, data) => {
   return Plan.findByIdAndUpdate(id, data, {
     new: true,
@@ -31,9 +27,18 @@ const remove = async (id) => {
   return Plan.findByIdAndDelete(id);
 };
 
+const getById = async (id) => {
+  return await User.findById(id);
+};
+
+const getAll = async () => {
+  return await User.find();
+};
+
 module.exports = {
   create,
   getById,
   update,
   remove,
+  getAll,
 };

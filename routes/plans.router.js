@@ -10,6 +10,8 @@ router.delete("/:id", (req, res) => planController.remove(req, res));
 
 router.post("/", (req, res) => planController.create(req, res));
 
-// router.get("/", (req, res) => planController.getByTi(req, res));
+router.get("/:id", (req, res) => planController.getById(req, res));
+
+router.get("/", (req, res) => planController.getAll(req, res));
 
 module.exports = router;
