@@ -1,19 +1,28 @@
 const Plan = require("../../db/models/plan.model");
-const errorHandle = require("../../helpers/error.service");
+const handleError = require("../../helpers/error.service");
 
 const create = async (data) => {
+  const now = new Date();
+  const dateFromTimestamp = new Date(data.deadline);
+
+  if (now.getTime() > dateFromTimestamp) {
+    throw new Error("Deadline is expired");
+  }
+
   try {
     const newPlan = new Plan({
       title: data.title,
       deadline: data.deadline,
+      isCompleted: false,
       created_at: Date.now(),
       updated_at: Date.now(),
     });
+
     await newPlan.save();
     return newPlan;
   } catch (err) {
     console.error(err, "plans.service");
-    return errorHandle(err.message, 500, err.name);
+    return handleError(err.message, 500, err.name);
   }
 };
 
@@ -35,10 +44,27 @@ const getAll = async () => {
   return await Plan.find();
 };
 
+const makeCompelted = async (id) => {
+  const plan = await getById(id);
+  if (!plan) {
+    throw new Error("Plan is not found");
+  }
+  const now = new Date();
+  const dateFromTimestamp = new Date(plan.deadline);
+
+  if (now.getTime() > dateFromTimestamp) {
+    throw new Error("Deadline is expired");
+  }
+
+  const result = await update(id, { isCompleted: true });
+  return result;
+};
+
 module.exports = {
   create,
   getById,
   update,
   remove,
   getAll,
+  makeCompelted,
 };

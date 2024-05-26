@@ -13,6 +13,10 @@ router.post("/", (req, res) => planController.create(req, res));
 
 router.get("/:id", (req, res) => planController.getById(req, res));
 
+router.put("/:id/complete", (req, res) =>
+  planController.makeCompelted(req, res)
+);
+
 router.get("/", getAuthorization, (req, res) =>
   planController.getAll(req, res)
 );

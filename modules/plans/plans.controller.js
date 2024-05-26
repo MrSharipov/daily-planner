@@ -76,10 +76,23 @@ const getAll = async (req, res) => {
   return res.json(result);
 };
 
+const makeCompelted = async (req, res) => {
+  const { id } = req.params;
+  try {
+    IdCheckDto(id);
+    const completedPlan = await plansService.makeCompelted(id);
+
+    return res.json(completedPlan);
+  } catch (err) {
+    return res.json(handleError(err.message, 500, err.name));
+  }
+};
+
 module.exports = {
   create,
   update,
   remove,
   getById,
   getAll,
+  makeCompelted,
 };

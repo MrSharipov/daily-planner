@@ -10,6 +10,10 @@ const planSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isCompleted: {
+      type: Boolean,
+      required: true,
+    },
     created_at: {
       type: Number,
       required: true,
