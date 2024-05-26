@@ -1,4 +1,5 @@
 const LoginUserDto = (userName, password) => {
+  console.log(userName);
   /* Check username */
   if (!userName) {
     throw new Error("username is not found");

@@ -1,4 +1,4 @@
-const {isDocumentId} = require("../../global-fn");
+const { isDocumentId } = require("../../global-fn");
 const UserUpdateDto = (id, user_name, password, active) => {
   if (!id) {
     throw new Error("id is not found");
@@ -26,6 +26,4 @@ const UserUpdateDto = (id, user_name, password, active) => {
   }
 };
 
-module.exports = {
-  UserUpdateDto,
-};
+module.exports = UserUpdateDto;

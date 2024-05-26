@@ -28,11 +28,11 @@ const remove = async (id) => {
 };
 
 const getById = async (id) => {
-  return await User.findById(id);
+  return await Plan.findById(id);
 };
 
 const getAll = async () => {
-  return await User.find();
+  return await Plan.find();
 };
 
 module.exports = {

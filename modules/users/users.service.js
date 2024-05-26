@@ -3,6 +3,7 @@ const errorHandle = require("../../helpers/error.service");
 const bcrypt = require("bcrypt");
 
 const create = async (data) => {
+  console.log(data);
   try {
     const newUser = new User({
       active: data.active ? data.active : true,
@@ -14,17 +15,17 @@ const create = async (data) => {
     await newUser.save();
     return newUser;
   } catch (err) {
-    console.error(err, 'user.service')
+    console.error(err, "user.service");
     return errorHandle(err.message, 500, err.name);
   }
 };
 
 const getByUserName = async (userName) => {
-  return User.findOne({user_name: userName});
+  return User.findOne({ user_name: userName });
 };
 
 const getById = async (id) => {
-  return await User.findById(id)
+  return await User.findById(id);
 };
 
 const getAll = async () => {
@@ -39,7 +40,7 @@ const update = async (id, data) => {
 
 const remove = async (id) => {
   return User.findByIdAndDelete(id);
-}
+};
 
 module.exports = {
   create,
@@ -47,5 +48,5 @@ module.exports = {
   update,
   getById,
   getAll,
-  remove
+  remove,
 };

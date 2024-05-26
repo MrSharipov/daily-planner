@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const planSchema = new mongoose.Schema(
   {
     title: {
-      type: "string",
+      type: String,
       required: true,
     },
     deadline: {
-      type: "string",
+      type: Number,
       required: true,
     },
     created_at: {

@@ -11,7 +11,7 @@ const PlanCreatDto = (title, deadline) => {
   if (!deadline) {
     throw new Error("deadline is not found");
   }
-  if (typeof deadline !== "string") {
+  if (typeof deadline !== "number") {
     throw new Error("deadline is not valid");
   }
 };

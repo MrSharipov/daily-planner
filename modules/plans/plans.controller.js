@@ -1,9 +1,10 @@
-const errorHandle = require("../../helpers/error.service");
 const plansService = require("../plans/plans.service");
-const PlanCreatDto = require("../../helpers/dtos/plans/plans-create.dto");
-const handleError = require("../../helpers/error.service");
-const { PlanUpdateDto } = require("../../helpers/dtos/plans/planUpdate.dto");
-const IdCheckDTO = require("../../helpers/dtos/global/id-check.dto");
+const {
+  PlanUpdateDto,
+  IdCheckDto,
+  PlanCreatDto,
+  handleError,
+} = require("../../helpers");
 
 const create = async (req, res) => {
   const { title, deadline } = req.body;
@@ -14,7 +15,7 @@ const create = async (req, res) => {
     return res.json(newPlan);
   } catch (err) {
     console.error(err, "plans.controller");
-    return res.json(errorHandle(err.message, 500, err.name));
+    return res.json(handleError(err.message, 500, err.name));
   }
 };
 
@@ -38,6 +39,7 @@ const update = async (req, res) => {
 
     return res.json(updatedPlan);
   } catch (err) {
+    console.log(err);
     return res.json(handleError(err.message, 500, err.name));
   }
 };
@@ -45,7 +47,7 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
   const { id } = req.params;
   try {
-    IdCheckDTO(id);
+    IdCheckDto(id);
     await plansService.remove(id);
     return res.json({
       id,
@@ -60,9 +62,9 @@ const remove = async (req, res) => {
 const getById = async (req, res) => {
   const { id } = req.params;
   try {
-    IdCheckDTO(id);
-    const user = await userService.getById(id);
-    return res.json(user);
+    IdCheckDto(id);
+    const plan = await plansService.getById(id);
+    return res.json(plan);
   } catch (err) {
     console.log(err);
     return res.json(handleError(err.message, 500, err.name));
@@ -70,7 +72,7 @@ const getById = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const result = await userService.getAll();
+  const result = await plansService.getAll();
   return res.json(result);
 };
 

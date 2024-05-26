@@ -20,6 +20,4 @@ const PlanUpdateDto = (id, title, deadline) => {
   }
 };
 
-module.exports = {
-  PlanUpdateDto,
-};
+module.exports = PlanUpdateDto;
