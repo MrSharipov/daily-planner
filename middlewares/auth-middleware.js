@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
+const { handleError } = require("../helpers");
 
 const generateToken = async (id) => {
-  return await jwt.sign({ id }, process.env.AUTH_SECRET, { expiresIn: "1h" });
+  return await jwt.sign({ id }, process.env.AUTH_SECRET, {
+    expiresIn: process.env.AUTH_EXPIRE,
+  });
 };
 const verifyToken = async (token) => {
   return await jwt.verify(token, "secret");
@@ -24,7 +27,7 @@ const getAuthorization = async (req, res, next) => {
     next();
     console.log(verifiedTokenData);
   } catch (err) {
-    console.log(err);
+    return res.json(handleError(err.message, 401, err.name));
   }
 };
 

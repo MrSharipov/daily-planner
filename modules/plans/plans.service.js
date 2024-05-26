@@ -6,7 +6,7 @@ const create = async (data) => {
   const dateFromTimestamp = new Date(data.deadline);
 
   if (now.getTime() > dateFromTimestamp) {
-    throw new Error("Deadline is expired");
+    throw new Error("You can't create a plan with old date");
   }
 
   try {

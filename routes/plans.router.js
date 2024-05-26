@@ -5,15 +5,23 @@ const planController = require("../modules/plans/plans.controller");
 const { getAuthorization } = require("../middlewares/auth-middleware");
 router.use(bodyParser.json());
 
-router.put("/:id", (req, res) => planController.update(req, res));
+router.put("/:id", getAuthorization, (req, res) =>
+  planController.update(req, res)
+);
 
-router.delete("/:id", (req, res) => planController.remove(req, res));
+router.delete("/:id", getAuthorization, (req, res) =>
+  planController.remove(req, res)
+);
 
-router.post("/", (req, res) => planController.create(req, res));
+router.post("/", getAuthorization, (req, res) =>
+  planController.create(req, res)
+);
 
-router.get("/:id", (req, res) => planController.getById(req, res));
+router.get("/:id", getAuthorization, (req, res) =>
+  planController.getById(req, res)
+);
 
-router.put("/:id/complete", (req, res) =>
+router.put("/:id/complete", getAuthorization, (req, res) =>
   planController.makeCompelted(req, res)
 );
 
