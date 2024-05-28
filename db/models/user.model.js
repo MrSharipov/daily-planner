@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const Mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Mongoose.Schema(
   {
     active: {
       type: Boolean,
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  {versionKey: false},
+  { versionKey: false }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = Mongoose.model("User", userSchema);

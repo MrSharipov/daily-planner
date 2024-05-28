@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { handleError } = require("../helpers");
+const { default: mongoose } = require("mongoose");
 
 const generateToken = async (id) => {
   return await jwt.sign({ id }, process.env.AUTH_SECRET, {
@@ -24,8 +25,8 @@ const getAuthorization = async (req, res, next) => {
 
   try {
     const verifiedTokenData = await verifyToken(authToken);
+    req.userId = verifiedTokenData.id;
     next();
-    console.log(verifiedTokenData);
   } catch (err) {
     return res.json(handleError(err.message, 401, err.name));
   }

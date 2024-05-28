@@ -8,9 +8,11 @@ const {
 
 const create = async (req, res) => {
   const { title, deadline } = req.body;
+  const userId = req.userId;
   try {
+    IdCheckDto(userId);
     PlanCreatDto(title, deadline);
-    const newPlan = await plansService.create({ title, deadline });
+    const newPlan = await plansService.create({ title, deadline, userId });
 
     return res.json(newPlan);
   } catch (err) {
@@ -21,18 +23,24 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const { title, deadline } = req.body;
-  const id = req.params.id;
+  const planId = req.params.id;
+  const userId = req.userId;
 
   try {
-    PlanUpdateDto(id, title, deadline);
+    IdCheckDto(userId);
+    PlanUpdateDto(planId, title, deadline);
 
-    const plan = await plansService.getById(id);
+    const plan = await plansService.getById(planId);
 
     if (!plan) {
       return res.json(handleError("Plan is not found", 500, {}));
     }
 
-    const updatedPlan = await plansService.update(id, {
+    if (userId !== plan.userId.toString()) {
+      return res.json(handleError("You can't change others' plan", 500, {}));
+    }
+
+    const updatedPlan = await plansService.update(planId, {
       title,
       deadline,
     });
@@ -46,8 +54,19 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   const { id } = req.params;
+  const userId = req.userId;
   try {
     IdCheckDto(id);
+    IdCheckDto(userId);
+
+    const plan = await getById(id);
+
+    if (!plan) {
+      throw new Error("Plan is not found");
+    }
+    if (userId !== plan.userId.toString()) {
+      throw new Error("You can't delete others' plan");
+    }
     await plansService.remove(id);
     return res.json({
       id,
@@ -61,9 +80,18 @@ const remove = async (req, res) => {
 
 const getById = async (req, res) => {
   const { id } = req.params;
+  console.log(id, "hello");
+  const userId = req.userId;
   try {
     IdCheckDto(id);
+    IdCheckDto(userId);
     const plan = await plansService.getById(id);
+    if (!plan) {
+      throw new Error("Plan is not found");
+    }
+    if (userId !== plan.userId.toString()) {
+      throw new Error("You can't get others' plan");
+    }
     return res.json(plan);
   } catch (err) {
     console.log(err);
@@ -72,15 +100,30 @@ const getById = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const result = await plansService.getAll();
-  return res.json(result);
+  const userId = req.userId;
+  try {
+    IdCheckDto(userId);
+    const result = await plansService.getAll(userId);
+    return res.json(result);
+  } catch (err) {
+    return res.json(handleError(err.message, 500, {}));
+  }
 };
 
-const makeCompelted = async (req, res) => {
+const makeCompleted = async (req, res) => {
   const { id } = req.params;
+  const userId = req.userId;
+
   try {
     IdCheckDto(id);
-    const completedPlan = await plansService.makeCompelted(id);
+    IdCheckDto(userId);
+
+    const plan = await getById(id);
+    if (userId !== plan.userId.toString()) {
+      throw new Error("You can't update others' plan");
+    }
+
+    const completedPlan = await plansService.makeCompleted(id);
 
     return res.json(completedPlan);
   } catch (err) {
@@ -94,5 +137,5 @@ module.exports = {
   remove,
   getById,
   getAll,
-  makeCompelted,
+  makeCompleted,
 };
