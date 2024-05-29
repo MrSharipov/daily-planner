@@ -22,7 +22,7 @@ router.get("/:id", getAuthorization, (req, res) =>
 );
 
 router.put("/:id/complete", getAuthorization, (req, res) =>
-  planController.makeCompelted(req, res)
+  planController.makeCompleted(req, res)
 );
 
 router.get("/", getAuthorization, (req, res) =>

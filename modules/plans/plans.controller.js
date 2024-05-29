@@ -59,11 +59,12 @@ const remove = async (req, res) => {
     IdCheckDto(id);
     IdCheckDto(userId);
 
-    const plan = await getById(id);
+    const plan = await plansService.getById(id);
 
     if (!plan) {
       throw new Error("Plan is not found");
     }
+
     if (userId !== plan.userId.toString()) {
       throw new Error("You can't delete others' plan");
     }
@@ -118,9 +119,9 @@ const makeCompleted = async (req, res) => {
     IdCheckDto(id);
     IdCheckDto(userId);
 
-    const plan = await getById(id);
+    const plan = await plansService.getById(id);
     if (userId !== plan.userId.toString()) {
-      throw new Error("You can't update others' plan");
+      throw new Error("You can't change others' plan");
     }
 
     const completedPlan = await plansService.makeCompleted(id);
