@@ -7,7 +7,7 @@ const generateToken = async (id) => {
   });
 };
 const verifyToken = async (token) => {
-  return await jwt.verify(token, "secret");
+  return jwt.verify(token, process.env.AUTH_SECRET);
 };
 
 const getAuthorization = async (req, res, next) => {
@@ -24,8 +24,8 @@ const getAuthorization = async (req, res, next) => {
 
   try {
     const verifiedTokenData = await verifyToken(authToken);
+    req.userId = verifiedTokenData.id;
     next();
-    console.log(verifiedTokenData);
   } catch (err) {
     return res.json(handleError(err.message, 401, err.name));
   }

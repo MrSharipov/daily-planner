@@ -14,7 +14,7 @@ const PlanUpdateDto = (id, title, deadline) => {
   }
 
   if (deadline) {
-    if (typeof deadline !== "string") {
+    if (typeof deadline !== "number") {
       throw new Error("deadline is not valid");
     }
   }

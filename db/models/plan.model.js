@@ -14,6 +14,10 @@ const planSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    userId:{
+      type: mongoose.Types.ObjectId,
+      required: true
+    },
     created_at: {
       type: Number,
       required: true,

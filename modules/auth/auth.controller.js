@@ -23,9 +23,7 @@ const login = async (req, res) => {
 
   try {
     LoginUserDto(userName, password);
-    console.log(userName);
     const user = await userService.getByUserName(userName);
-    console.log(user);
     if (!user) {
       throw new Error("You are not registered in the system");
     }

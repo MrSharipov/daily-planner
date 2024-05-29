@@ -14,6 +14,7 @@ const create = async (data) => {
       title: data.title,
       deadline: data.deadline,
       isCompleted: false,
+      userId: data.userId,
       created_at: Date.now(),
       updated_at: Date.now(),
     });
@@ -40,8 +41,8 @@ const getById = async (id) => {
   return await Plan.findById(id);
 };
 
-const getAll = async () => {
-  return await Plan.find();
+const getAll = async (userId) => {
+  return Plan.find({userId: userId});
 };
 
 const makeCompelted = async (id) => {
@@ -56,8 +57,7 @@ const makeCompelted = async (id) => {
     throw new Error("Deadline is expired");
   }
 
-  const result = await update(id, { isCompleted: true });
-  return result;
+  return await update(id, {isCompleted: true});
 };
 
 module.exports = {
