@@ -2,7 +2,10 @@ const userService = require("../users/users.service");
 const { generateToken } = require("../../middlewares/auth-middleware");
 
 const register = async (userName, password) => {
-  console.log;
+  const user = await userService.getByUserName(userName);
+  if (user) {
+    throw new Error("Username already exists");
+  }
   // add some extra fields
   const userData = {
     userName,
