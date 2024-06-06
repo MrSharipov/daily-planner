@@ -1,11 +1,13 @@
 const express = require("express");
-const dotEnv = require('dotenv');
-const {authRouter, usersRouter, plansRouter} = require("./routes");
+var cors = require("cors");
+const dotEnv = require("dotenv");
+const { authRouter, usersRouter, plansRouter } = require("./routes");
 
 const dbConnect = require("./db/db.connect");
 
 dotEnv.config();
 const app = express();
+app.use(cors());
 const port = process.env.SERVER_PORT;
 
 dbConnect();
